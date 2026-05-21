@@ -1,0 +1,6 @@
+# System Architecture
+The project follows a decoupled Client-Server architecture, separating the user interface from the data processing logic.
+The Client folder serves as the frontend of the application.It contains all the source code responsible for the user interface, including components ,stylesheets, and assets like images or icons.This folder typically houses a modern JavaScript framework such as React,utilizing HTML5 and CSS3 to build a responsive and interactive experience for the user.
+The server folder acts as the backend of the application,managing the business logic ,database interactions ,and authentication.
+It contains the API routes,controllers,and data modules required to serve the application's needs.This layer is built using technologies like Node.js and Express,which handle incoming requests and interface with a database(such as MongoDB or PostgreSQL) to retrieve or store persistent information.
+Communication between the client and the server is handled via REST API.The client sends asynchronous HTTP requests(such as GET,POST,PUT, and DELETE) to specific endpoints defined on the server.The server processes these requests and returns data,usually in JSON format,which the client then uses to upadte the UI dynamically without requiring a full page reload.
