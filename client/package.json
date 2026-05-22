@@ -1,0 +1,11 @@
+{
+ "name": "ecommerce-client",
+ "version": "0.1.0",
+ "private": true,
+ "description": "React frontend for e-commerce product management system",
+ "scripts": {
+ "dev": "echo 'React dev server will go here'",
+ "build": "echo 'React build will go here'",
+ "test": "echo 'Tests will go here'"
+ }
+}
