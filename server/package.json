@@ -1,0 +1,12 @@
+{
+ "name": "ecommerce-server",
+ "version": "0.1.0",
+ "private": true,
+ "description": "Node.js Express API for e-commerce product management system",
+ "main": "index.js",
+ "scripts": {
+ "start": "echo 'Server start will go here'",
+ "dev": "echo 'Server dev mode will go here'",
+ "test": "echo 'Tests will go here'"
+ }
+}
