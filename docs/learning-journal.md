@@ -1,4 +1,7 @@
 # Learning Journal -
+
+## WEEK1
+
 # 20 May 2026
 * Created a private repository on github named 'ecommerce-pms'.
 * Cloned the repository to my local machine.
@@ -20,3 +23,11 @@
 * Documentation is important as to ensure that all contributors of repo are on the same page,preventing misunderstandings between them.
 * Even as a solo developer issue tracking provide a historical record of why decisions were made,not just what changed for future.
 * Conventional commits format adds a structured ,human and machine readable layer to git history.
+
+## WEEK2
+
+# 25May 2026
+* I built basic page of ecommerce website using HTML like heading,section,lists,forms and button tags.
+* I learned HTML already so nothing is new to me today.
+* Basic HTML is added,so it was easy.
+
