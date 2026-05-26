@@ -1,0 +1,18 @@
+/* Header */
+header {
+ padding: var(--space-4) var(--space-6);
+ background-color: var(--color-bg);
+ border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+   display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+/* header>*{
+/* Use flexbox to lay out header items horizontally */
+/* } */
+/* Navigation */
+nav ul {
+ display: flex;
+ gap: var(--space-6)
+}
