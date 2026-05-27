@@ -31,3 +31,12 @@
 * I learned HTML already so nothing is new to me today.
 * Basic HTML is added,so it was easy.
 
+# 26May 2026
+## Week 2, Day 2 — CSS Fundamentals
+**What I built:** Today I wrote CSS code for website which includes flexbox,transitions,border and nasic fundamentals of CSS.
+**The box model in my own words:**
+The box model is like the box in which actual items are present like content,images, the box has border,margin,padding,height and width which can be changed by ourselves in CSS code.
+**Flexbox vs the old way:**
+Old way is by using percentages to adjust width like width:33.33% while Flexbox is we tell a container to display:flex and it automatically handles the spacing,sizing,and alignment of its children or items.
+**My biggest "aha" moment today:**
+Using box-sizing:border-box is best option.
