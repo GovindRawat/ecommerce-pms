@@ -40,3 +40,14 @@ The box model is like the box in which actual items are present like content,ima
 Old way is by using percentages to adjust width like width:33.33% while Flexbox is we tell a container to display:flex and it automatically handles the spacing,sizing,and alignment of its children or items.
 **My biggest "aha" moment today:**
 Using box-sizing:border-box is best option.
+
+# 27May 2026
+## Week 2, Day 3 — Tailwind, Responsive Design, Accessibility
+**What I built today:**
+Built a responsive website using Tailwind CSS,on opening website on mobile phone,tablet and desktop how website will look.
+**The shift from yesterday:**
+Yesterday I wrote CSS files. Today I wrote utility classes. The difference in how I thought was today I don't need to think about names given to divs or anything like that ,I just have to add inbuilt classes of tailwind as the attributrte of different HTML tags.
+**What surprised me about accessibility:**
+Accessibility is simple as no need of CSS files ,all classes can be added only in HTML elements itself.
+**Where I struggled:**
+In adding some CSS properties,I got stucked like what Tailwind classes will suit this property ,so I had to google it. Making responsive design is bit diificult task.
