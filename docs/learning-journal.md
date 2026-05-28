@@ -51,3 +51,6 @@ Yesterday I wrote CSS files. Today I wrote utility classes. The difference in ho
 Accessibility is simple as no need of CSS files ,all classes can be added only in HTML elements itself.
 **Where I struggled:**
 In adding some CSS properties,I got stucked like what Tailwind classes will suit this property ,so I had to google it. Making responsive design is bit diificult task.
+
+# 28May 2026
+* Added main and footer tag in html.
