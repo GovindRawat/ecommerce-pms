@@ -54,3 +54,15 @@ In adding some CSS properties,I got stucked like what Tailwind classes will suit
 
 # 28May 2026
 * Added main and footer tag in html.
+
+# 29May 2026
+## Week 2, Day 4 — Bootstrap & the Two-Framework Problem
+**What I built:** 
+Today I rebuilt the product grid using Bootstrap, used Bootstrap's grid ( container , row , col ), card component, and btn
+classes. In the same html files, added tailwind also to see, which one is better framework to use in real websites(Bootstrap or Tailwind).
+**Tailwind vs Bootstrap — my honest take:**
+Honestly, I find Bootstrap easier than Tailwind because I used it before, but in real life projects , Tailwind is more useful as unlimited customization can be made in Tailwind and it will be faster once I memorize classes.
+**What happened when I loaded both:**
+When I loaded both, Tailwind wins and changes implemented written using Tailwind. In short, Tailwind overrides the Bootstrap.
+**My architectural recommendation:**
+For beginners, Bootstrap is fine for learning and HTML code is clean ,Fastest for standard layouts but harder for customization. My architectural recommendation is to use Tailwind for real life projects and for long term use as Tailwind has the Steep Learning curve for beginners but it will be Faster once you memorize classes and unlimited customization can be made in CSS by using Tailwind.
