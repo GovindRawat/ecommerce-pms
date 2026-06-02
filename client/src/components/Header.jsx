@@ -19,5 +19,7 @@ transition">Cart</a>
  </div>
  </div>
  </header>
- )
+ );
  }
+
+ export default Header;
