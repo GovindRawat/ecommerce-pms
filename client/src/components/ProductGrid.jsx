@@ -1,0 +1,24 @@
+import ProductCard from './ProductCard'
+function ProductGrid({ products }) {
+ return (
+ <section id="products" aria-labelledby="products-heading">
+ <h2 id="products-heading" className="text-2xl font-bold mb-6">
+ Featured Products
+ </h2>
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+gap-6">
+ {products.map(product => (
+ <ProductCard
+ key={product.id}
+ name={product.name}
+ description={product.description}
+ price={product.price}
+ image={product.image}
+inStock={product.inStock}
+/>
+ ))}
+ </div>
+ </section>
+ )
+}
+export default ProductGrid;
