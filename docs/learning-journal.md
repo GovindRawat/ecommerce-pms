@@ -66,3 +66,24 @@ Honestly, I find Bootstrap easier than Tailwind because I used it before, but in
 When I loaded both, Tailwind wins and changes implemented written using Tailwind. In short, Tailwind overrides the Bootstrap.
 **My architectural recommendation:**
 For beginners, Bootstrap is fine for learning and HTML code is clean ,Fastest for standard layouts but harder for customization. My architectural recommendation is to use Tailwind for real life projects and for long term use as Tailwind has the Steep Learning curve for beginners but it will be Faster once you memorize classes and unlimited customization can be made in CSS by using Tailwind.
+
+## Week 3, Day 1 — Entering the React World
+**The biggest mental shift today:**
+JSX isn't HTML-in-JS, it's JavaScript that compiles to function calls and looks like HTML for ergonomics. It gets transformed into regular JavaScript function calls and designed to look like HTML to make writing I structures more intuitive for developers. It allows us to describe what the UI should look loke within the JavaScript code.
+**What "clicked" about JSX:**
+JSX stands for JavaScript XML and it allows the developers to write HTML -like code directly inside JavaScript files.
+**What surprised me about the Vite setup:**
+Setup is rapd and lightweight. The initial setup download takes seconds, Instant server start by typing npm run dev boots the server in milliseconds.
+**A concept I want to revisit:**
+Need more study of REACT in deep, need more practice.
+
+## Week 3, Day 2 — Components & Props
+**The data flow I built today:**
+Data starts in products.js, which acts as our "source of truth"(the raw data). I imported that array into App, making it the owner of the data for this exercise. From there, I passed the entire array down to ProductGrid via a prop.
+Inside ProdiuctGrid, I used .map() to loop through that array. For every single product object, the grid "spawns" a ProductCard component, passing through product's information down as a prop. It's like a delivery pipeline: the warehouse(App) sends a big crate to the distributor(Grid), who then hands individual packages to the delivery drivers(Cards).
+**The `.map()` pattern in my own words:**
+Think of a .map() like a copy-paste machiine with a brain. You give a list of data(an array), and you tell it, "For every iten in this list, I want you to transform it into this specific React component." It returns a new list of ready-to-render components. The most inportant thing to remember is that the "brain" needs a unique key for every item it creates so React doesn't get confused about which item is which if things change later.
+**Where I tripped up:**
+I got stuck trying to access props.name when I already destructured the props object in the function arguments. I had to remind myself :if I use ({name}), I just use name.not props.name .
+**One thing I'd refactor if I had time:**
+I would destructure the product object earlier in the ProductCard component. Right now, I'm passing the whole object and calling product.title.product.price,etc. It would be much cleaner to destructure those variables at the top of the component so the JSX looks tidier and is easier to read at a glance.
