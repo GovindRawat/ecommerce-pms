@@ -1,4 +1,8 @@
+import Button from './Button'
 function ProductCard({ name, description, price, image, inStock }) {
+     function handleAddToCart() {
+ console.log(`Added "${name}" to cart — $${price.toFixed(2)}`)
+ }
  return (
  <article className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col">
  <img 
@@ -14,11 +18,12 @@ function ProductCard({ name, description, price, image, inStock }) {
  ${price.toFixed(2)}
  </span>
  {inStock ? (
-<button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+<button onClick={handleAddToCart} className="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500
+focus:ring-offset-2">
  Add to Cart
 </button>
  ) : (
- <span className=" text-red-500 font-medium">Out of Stock</span>
+ <span className="text-red-500 font-medium">Out of Stock</span>
  )}
  </div>
  </div>

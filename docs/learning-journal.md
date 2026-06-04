@@ -80,10 +80,22 @@ Need more study of REACT in deep, need more practice.
 ## Week 3, Day 2 — Components & Props
 **The data flow I built today:**
 Data starts in products.js, which acts as our "source of truth"(the raw data). I imported that array into App, making it the owner of the data for this exercise. From there, I passed the entire array down to ProductGrid via a prop.
-Inside ProdiuctGrid, I used .map() to loop through that array. For every single product object, the grid "spawns" a ProductCard component, passing through product's information down as a prop. It's like a delivery pipeline: the warehouse(App) sends a big crate to the distributor(Grid), who then hands individual packages to the delivery drivers(Cards).
+Inside ProductGrid, I used .map() to loop through that array. For every single product object, the grid "spawns" a ProductCard component, passing through product's information down as a prop. It's like a delivery pipeline: the warehouse(App) sends a big crate to the distributor(Grid), who then hands individual packages to the delivery drivers(Cards).
 **The `.map()` pattern in my own words:**
 Think of a .map() like a copy-paste machiine with a brain. You give a list of data(an array), and you tell it, "For every iten in this list, I want you to transform it into this specific React component." It returns a new list of ready-to-render components. The most inportant thing to remember is that the "brain" needs a unique key for every item it creates so React doesn't get confused about which item is which if things change later.
 **Where I tripped up:**
 I got stuck trying to access props.name when I already destructured the props object in the function arguments. I had to remind myself :if I use ({name}), I just use name.not props.name .
 **One thing I'd refactor if I had time:**
 I would destructure the product object earlier in the ProductCard component. Right now, I'm passing the whole object and calling product.title.product.price,etc. It would be much cleaner to destructure those variables at the top of the component so the JSX looks tidier and is easier to read at a glance.
+
+## Week 3, Day 3 — Composition, Events, Spread
+**What `children` unlocked for me:**
+It's what lets you put one component inside another, like a "box" that can hold any content you drop into it.
+**The spread vs explicit choice I made:**
+Explicit: Writing out every prop like name={name} age={age}. It's clear but takes a lot of typing.
+Spread: Using {...user} to pass everything at once. It's fast but can sometimes hide what data is actually being sent.
+I would prefer Spread as it is easier and more suitable for large projects.
+**The first time I tried `onClick={handleClick()}` instead of `onClick={handleClick}`:**
+When you add the parentheses () , you are telling the code to run the function immediately as soon as the page loads. This often causes errors. When you leave the parentheses off, you are giving React a reference to the function. You're saying, "don't run this now- only run it when the user actually clicks the button."
+**Something I'm still fuzzy on:**
+State management, when exactly a component re-renders, or how to pass data backup from a child to a parent.
