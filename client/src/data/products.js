@@ -20,7 +20,7 @@ export const products = [
  name: 'Smart Watch',
  description: 'Track fitness, calls and notifications with a modern smartwatch experience.',
  price: 2499,
-  image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000',
+ image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000?text=Smart%20Watch&fit=crop&w=400&h=400',
  inStock: false,
  },
  {
@@ -28,7 +28,7 @@ export const products = [
  name: 'Nike Air Max',
  description: 'Comfortable and stylish sneakers designed for everyday wear and sports activities.',
  price: 4999,
-  image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000',
+  image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?text=Nike%20Air%20Max&fit=crop&w=400&h=400',
  inStock: true,
  },
  {
@@ -36,7 +36,7 @@ export const products = [
  name: 'iPhone 15 Pro',
  description: ' Powerful smartphone with advanced camera system and premium performance.',
  price: 11999,
-  image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1000',
+  image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1000?text=iPhone%2015%20Pro&fit=crop&w=400&h=400',
  inStock: true,
  },
  {
@@ -44,7 +44,7 @@ export const products = [
  name: 'Headphones',
  description: 'Enjoy immersive sound with active noise cancellation and long battery life.',
  price: 3299,
-  image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000',
+  image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000?text=Headphones&fit=crop&w=400&h=400',
  inStock: true,
  },
 ];
