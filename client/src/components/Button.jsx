@@ -5,6 +5,7 @@ function Button({ children, onClick, variant = 'primary', disabled = false }) {
  primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
  secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500",
  danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
+  inverse: "bg-white text-blue-700 hover:bg-gray-100 focus:ring-white focus:ring-offset-blue-700",
  }
  
  const disabledClasses = "opacity-50 cursor-not-allowed"
