@@ -1,7 +1,7 @@
 import Button from './Button'
 const Hero = () => {
  return (
-  <section className="bg-blue-700 text-white py-12 md:py-20 text-3xl md:text-5xl">
+  <section className="bg-blue-700 text-white">
      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                 <div className="max-w-3xl">
     <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-6">
@@ -10,7 +10,7 @@ const Hero = () => {
                     <p className="text-sm sm:text-base md:text-lg text-blue-100 mb-8 leading-relaxed">
                         Explore electronics, fashion, accessories and more with high quality products and fast delivery.
                     </p>
-                    <Button onClick={() => console.log("Navigating to Shop...")} className="px-6 py-3 bg-white text-blue-700 font-medium rounded-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-700">
+                    <Button  variant="inverse" onClick={() => console.log("Navigating to Shop...")}>
                         Shop Now
                     </Button>
                 </div>
