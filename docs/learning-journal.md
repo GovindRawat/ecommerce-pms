@@ -99,3 +99,39 @@ I would prefer Spread as it is easier and more suitable for large projects.
 When you add the parentheses () , you are telling the code to run the function immediately as soon as the page loads. This often causes errors. When you leave the parentheses off, you are giving React a reference to the function. You're saying, "don't run this now- only run it when the user actually clicks the button."
 **Something I'm still fuzzy on:**
 State management, when exactly a component re-renders, or how to pass data backup from a child to a parent.
+
+## WEEK 4 DAY 2
+# Why I agree with this design "reaching zero with means remove".
+I think removing an item when quantity reaches zero is a good user experience because a product with quantity 0 has no meaning in a shopping cart. It reduces clutter and keeps the cart data simple.
+Instead of:
+
+[
+  { id: 1, quantity: 0 }
+]
+
+we store:
+
+[]
+
+which is cleaner and easier to work with.
+#The advantage of storing only {id, quantity} in the cart is that product information is not duplicated. Any change to product name, image, or price is automatically reflected in the cart because the sidebar looks up the current product data using the ID. However, this introduces a dependency on the product catalog. If a product is deleted, the lookup returns undefined. I chose to filter out orphaned cart items because products that no longer exist cannot be purchased, and removing them keeps the cart state consistent and avoids confusing users.
+
+## Week 4, Day 3 — Effects & the Outside World
+**The infinite-loop bug, in my own words:**
+An infinite loop happens when a useEffect updates a state variable, and that state change causes the component to re-render, which runs the effect again, creating a cycle that never ends.
+The loop continues forever until React throws an error or the browser becomes unresponsive.
+**The cleanup function clicked when:**
+The Escape key listener example made it click for me.
+At first I thought the cleanup function only runs when a component unmounts.
+Then I learned React also runs cleanup before re-running an effect.
+Today's work made useEffect feel much more practical.
+Before today, I understood that effects were used for side effects, but I didn't really understand why cleanup functions were necessary.
+The Escape key listener task made it real for me. I could clearly see how listeners would keep accumulating if I never removed them. The body scroll lock example also helped me understand that effects are not only for fetching data — they're for synchronizing React with anything outside React.
+The localStorage task was also useful because it showed how React state can be connected to browser storage and survive page reloads.
+**The one thing I'd be careful about with useEffect going forward:**
+I would be very careful whenever an effect updates state.
+I will immediately check:
+Does this need to happen inside an effect?
+Is my dependency array correct?
+Could this effect trigger itself again?
+Because the easiest way to create an infinite loop in React is an effect that updates state without proper dependency management.

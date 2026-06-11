@@ -1,7 +1,9 @@
 import Button from './Button'
-function ProductCard({ name, description, price, image, inStock }) {
-     function handleAddToCart() {
- console.log(`Added "${name}" to cart — $${price.toFixed(2)}`)
+function ProductCard ({ id, name, description, price, image, inStock, onAddToCart })  
+{
+ function handleAddToCart() {
+    onAddToCart(id)
+    console.log(onAddToCart)
  }
  return (
  <article className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col">
