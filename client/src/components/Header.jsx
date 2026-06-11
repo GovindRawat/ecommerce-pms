@@ -1,4 +1,6 @@
-function Header() {
+function Header({ cart ,  onCartClick }) {
+ // Sum all quantities to get total item count
+ const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0)
  return (
  <header className="bg-white shadow-sm border-b border-gray-200">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,8 +13,11 @@ function Header() {
 transition">Home</a>
  <a href="#products" className="font-medium hover:text-blue-700
 transition">Products</a>
- <a href="#" className="font-medium hover:text-blue-700
-transition">Cart</a>
+ <button   onClick={onCartClick}
+  aria-label={`Cart with ${itemCount} items`}
+  className="font-medium hover:text-blue-700 transition focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+>
+Cart ({itemCount})</button>
  <a href="#" className="font-medium hover:text-blue-700
  transition">Login</a>
  </nav>
