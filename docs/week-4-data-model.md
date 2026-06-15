@@ -234,3 +234,37 @@ The cart state lives in App because it is the lowest common ancestor shared by t
 - Body scroll lock: tied to isOpen (CartSidebar.jsx)
 - Focus management: tied to isOpen (CartSidebar.jsx)
 All cleanup functions correctly remove their side effects.
+
+# Week 4 Retrospective
+
+## What was hard?
+The hardest part for me this week was understanding how data should flow in a React application. Initially, I thought passing props through multiple components was normal, but once the cart functionality grew, prop drilling became difficult to manage. Keeping track of which component owned the state and which component only displayed it required a different way of thinking.
+Another challenging topic was `useEffect`. At first, I treated it like a place to put any code that needed to run after rendering. The infinite-loop exercise helped me understand that effects must be used carefully, especially when they update state. Understanding dependency arrays and cleanup functions took some time because they involve thinking about the component lifecycle rather than just writing code.
+Context was also confusing at first. I understood how to create a context, but it took me some time to understand why we needed a custom hook like `useCart()` and why Context exists in the first place.
+
+## What clicked?
+The biggest thing that clicked for me was the distinction between state, props, Context, and regular imports.
+I now understand that:
+* State is data that changes over time.
+* Props are used to pass data from parent to child.
+* Context is for shared mutable state needed by many components.
+* Regular imports are for static configuration data.
+The cart example made this very clear. The cart belongs in Context because many components need it and it changes frequently. The products array does not belong in Context because it is currently static data.
+Another concept that finally clicked was derived state. Instead of storing `itemCount` separately, I learned that it is better to calculate it directly from the cart using `reduce()`. This avoids having multiple sources of truth and keeps the application simpler.
+The cleanup function in `useEffect` also made sense after implementing the Escape key listener. I finally understood that cleanup is not only for component unmounting but also for removing old side effects before React runs the effect again.
+
+## What would I do differently?
+If I started this project again, I would spend more time designing the data model before writing components. Many later decisions became easier once I clearly understood what data the cart should store and where that state should live.
+I would also think more carefully before creating new state variables. Earlier, I would have created separate state for values like item counts, totals, and other derived data. Now I understand that many values can be calculated directly from existing state.
+Another thing I would do differently is break responsibilities into separate files earlier. Moving cart logic into CartContext made the application much cleaner, and I can see how separating concerns helps maintainability as projects grow.
+
+## Biggest Lesson From Week 4
+My biggest lesson is that React is not just about building UI components. It is mainly about managing data flow and state correctly.
+This week taught me:
+* How to lift state up.
+* How to avoid prop drilling.
+* When to use Context.
+* How to use `useEffect` safely.
+* Why cleanup functions matter.
+* Why derived state is usually better than duplicated state.
+I feel much more confident now in building applications where multiple components need to share and update the same data.

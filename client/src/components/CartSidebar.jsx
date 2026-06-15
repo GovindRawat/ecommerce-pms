@@ -1,44 +1,47 @@
 import { useEffect, useRef } from 'react'
+import { useCart } from '../context/CartContext'
+import { products } from '../data/products'
 
-function CartSidebar({
-  isOpen,
-  onClose,
-  cart,
-  products,
-  onIncrement,
-  onDecrement,
-  onRemove
-}) {
+function CartSidebar() {
+ const {
+ cart,
+isCartOpen,
+ closeCart,
+ incrementQuantity,
+ decrementQuantity,
+ removeFromCart,
+ } = useCart()
+ 
 
-  const closeButtonRef = useRef(null)
+  const closeButtonRef = useRef(null);
 
     // Escape key listener
 useEffect(() => {
 
-  if (!isOpen) return
+  if (!isCartOpen) return;
 
   function handleKeyDown(event) {
     if (event.key === 'Escape') {
-      onClose()
+      closeCart();
     }
   }
 
-  document.addEventListener('keydown', handleKeyDown)
+  document.addEventListener('keydown', handleKeyDown);
 
   return () => {
     document.removeEventListener(
       'keydown',
       handleKeyDown
-    )
-  }
+    );
+  };
 
-}, [isOpen, onClose])
+}, [isCartOpen, closeCart]);
 
 
 // Body scroll lock
 useEffect(() => {
 
-  if (isOpen) {
+  if (isCartOpen) {
     document.body.style.overflow = 'hidden'
   }
 
@@ -46,7 +49,7 @@ useEffect(() => {
     document.body.style.overflow = ''
   }
 
-}, [isOpen])
+}, [isCartOpen])
 
 
   // Join cart data with product data
@@ -67,7 +70,7 @@ useEffect(() => {
     0
   )
 
-  if (!isOpen) {
+  if (!isCartOpen) {
     return null
   }
 
@@ -77,7 +80,7 @@ useEffect(() => {
 
       <div
         className="fixed inset-0 bg-black/50 z-40"
-        onClick={onClose}
+        onClick={closeCart}
         aria-hidden="true"
       />
 
@@ -99,7 +102,7 @@ useEffect(() => {
 
           <button
             ref={closeButtonRef}
-            onClick={onClose}
+            onClick={closeCart}
             aria-label="Close cart"
             className="text-2xl font-bold hover:text-red-600 transition focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
           >
@@ -155,7 +158,7 @@ useEffect(() => {
                     <div className="flex items-center gap-2 mt-2">
 
                       <button
-                        onClick={() => onDecrement(item.id)}
+                        onClick={() => decrementQuantity(item.id)}
                         className="px-2 py-1 border rounded hover:bg-gray-100 focus:ring-2 focus:ring-blue-500"
                         aria-label={`Decrease quantity of ${item.name}`}
                       >
@@ -167,7 +170,7 @@ useEffect(() => {
                       </span>
 
                       <button
-                        onClick={() => onIncrement(item.id)}
+                        onClick={() => incrementQuantity(item.id)}
                         className="px-2 py-1 border rounded hover:bg-gray-100 focus:ring-2 focus:ring-blue-500"
                         aria-label={`Increase quantity of ${item.name}`}
                       >
@@ -179,7 +182,7 @@ useEffect(() => {
                     {/* Remove */}
 
                     <button
-                      onClick={() => onRemove(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       className="mt-2 text-red-600 hover:text-red-700 text-sm focus:ring-2 focus:ring-red-500 rounded"
                     >
                       Remove
