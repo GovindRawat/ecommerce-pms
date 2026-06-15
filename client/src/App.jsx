@@ -3,6 +3,8 @@ import Hero from './components/Hero'
 import ProductGrid from './components/ProductGrid'
 import Footer from './components/Footer'
 import { products } from './data/products'
+import CartSidebar from './components/CartSidebar'
+
 function App() {
  return (
  <>
@@ -11,8 +13,10 @@ function App() {
  <Hero />
  <ProductGrid products={products} />
  </main>
- <Footer />
- </>
- )
+ <CartSidebar />
+<Footer />
+    </>
+  )
 }
+
 export default App;
