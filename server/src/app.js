@@ -1,9 +1,14 @@
 const express = require('express')
+const app = express();
+app.use(express.json());
+const requestLogger = require('./middleware/logger')
 const productsRouter = require('./routes/products.routes')
-const app = express()
-// Built-in middleware to parse JSON request bodies
-app.use(express.json())
-// Health check — always include one
+const cors = require('cors')
+app.use(cors({
+ origin: 'http://localhost:5173', // only Vite's dev port
+ credentials: true,
+}))
+app.use(requestLogger) // ← BEFORE all routes
 app.get('/health', (req, res) => {
  res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
