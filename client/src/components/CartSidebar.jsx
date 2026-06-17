@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useCart } from '../context/CartContext'
-import { products } from '../data/products'
+import { useProductsContext } from '../context/ProductsContext'
 
 function CartSidebar() {
  const {
@@ -53,11 +53,12 @@ useEffect(() => {
 
 
   // Join cart data with product data
+const { products } = useProductsContext()
   const cartItems = cart.map(cartItem => {
     const product = products.find(
       p => p.id === cartItem.id
     )
-
+       if (!product) return null
     return {
       ...product,
       quantity: cartItem.quantity
