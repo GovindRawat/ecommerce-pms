@@ -1,50 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { apiFetch } from '../lib/api'
 
 export function useProducts() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    let cancelled = false
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true)
+      setError(null)
 
-    async function fetchProducts() {
-      try {
-        setLoading(true)
-        setError(null)
+      const data = await apiFetch('/api/products')
 
-        const res = await fetch('http://localhost:3000/api/products')
-
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}: ${res.statusText}`)
-        }
-
-        const data = await res.json()
-
-        if (!cancelled) {
-          setProducts(data)
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(err.message)
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false)
-        }
-      }
-    }
-
-    fetchProducts()
-
-    return () => {
-      cancelled = true
+      setProducts(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
     }
   }, [])
+
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
   return {
     products,
     loading,
     error,
+    refetch: fetchProducts,
   }
 }
