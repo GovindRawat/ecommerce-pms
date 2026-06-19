@@ -54,16 +54,20 @@ useEffect(() => {
 
   // Join cart data with product data
 const { products } = useProductsContext()
-  const cartItems = cart.map(cartItem => {
+const cartItems = cart
+  .map(cartItem => {
     const product = products.find(
       p => p.id === cartItem.id
     )
-       if (!product) return null
+
+    if (!product) return null
+
     return {
       ...product,
-      quantity: cartItem.quantity
+      quantity: cartItem.quantity,
     }
   })
+  .filter(Boolean)
 
   // Derived total price
   const totalPrice = cartItems.reduce(

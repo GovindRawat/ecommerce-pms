@@ -4,6 +4,7 @@ import ProductGrid from './components/ProductGrid'
 import Footer from './components/Footer'
 import CartSidebar from './components/CartSidebar'
 import { useProductsContext } from './context/ProductsContext'
+import AddProductForm from './components/AddProductForm'
 
 function App() {
   const { products, loading, error } = useProductsContext()
@@ -35,8 +36,11 @@ function App() {
         )}
 
         {!loading && !error && (
-          <ProductGrid products={products} />
-        )}
+ <>
+ <AddProductForm />
+ <ProductGrid products={products} />
+ </>
+)}
       </main>
 
       <Footer />
