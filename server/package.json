@@ -6,7 +6,9 @@
  "main": "index.js",
  "scripts": {
   "start": "node src/index.js",
-  "dev": "nodemon src/index.js"
+  "dev": "nodemon src/index.js",
+  "migrate": "node src/db/migrate.js",
+   "seed": "node src/db/seed.js"
  },
  "keywords": [],
  "author": "",
@@ -28,6 +30,7 @@
   "cross-spawn": "^7.0.6",
   "debug": "^4.4.3",
   "deep-is": "^0.1.4",
+  "dotenv": "^17.4.2",
   "escape-string-regexp": "^4.0.0",
   "eslint-scope": "^9.1.2",
   "eslint-visitor-keys": "^5.0.1",
@@ -64,6 +67,7 @@
   "p-locate": "^5.0.0",
   "path-exists": "^4.0.0",
   "path-key": "^3.1.1",
+  "pg": "^8.22.0",
   "prelude-ls": "^1.2.1",
   "punycode": "^2.3.1",
   "shebang-command": "^2.0.0",
