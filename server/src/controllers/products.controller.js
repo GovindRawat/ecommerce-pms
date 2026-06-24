@@ -1,81 +1,54 @@
-const { products } = require('../data/products')
-function getAllProducts(req, res) {
- res.json(products)
-}
-function getProductById(req, res) {
- const id = parseInt(req.params.id, 10)
- 
- if (isNaN(id)) {
- return res.status(400).json({ error: 'Product ID must be a number' })
- }
- 
- const product = products.find(p => p.id === id)
- 
- if (!product) {
- return res.status(404).json({ error: `Product with id ${id} not found` })
- }
-   // Success
-  res.json(product)
-}
-function createProduct(req, res) {
- const { name, description, price, image, inStock } = req.body
- 
- // Validation
- const errors = []
-  if (!name || typeof name !== 'string') errors.push('name is required and must be a string')
- if (!description || typeof description !== 'string') errors.push('description is required and must be a string')
- if (typeof price !== 'number' || price < 0) errors.push('price must be a non-negative number')
- if (!image || typeof image !== 'string') errors.push('image is required and must be a string')
- if (typeof inStock !== 'boolean') errors.push('inStock must be a boolean')
- 
- if (errors.length > 0) {
- return res.status(400).json({ errors })
- }
+const pool = require('../db/pool')
+const { rowToProduct } = require('../db/mappers')
 
-// Generate new ID
-  const newProduct = {
-    id: products.length > 0
-      ? Math.max(...products.map(product => product.id)) + 1
-      : 1,
-    name,
-    description,
-    price,
-    image,
-    inStock
+async function getAllProducts(req, res) {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM products ORDER BY created_at DESC'
+    )
+
+    res.json(rows.map(rowToProduct))
+  } catch (err) {
+    console.error('getAllProducts error:', err)
+
+    res.status(500).json({
+      error: 'Failed to fetch products',
+    })
   }
-
-  products.push(newProduct)
-
-  res.status(201).json(newProduct)
 }
-function updateProduct(req, res) {
+async function getProductById(req, res) {
   const id = parseInt(req.params.id, 10)
 
-  // Validate ID
   if (isNaN(id)) {
     return res.status(400).json({
-      error: 'Product ID must be a number'
+      error: 'Product ID must be a number',
     })
   }
 
-  // Find product index
-  const index = products.findIndex(p => p.id === id)
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM products WHERE id = $1',
+      [id]
+    )
 
-  if (index === -1) {
-    return res.status(404).json({
-      error: `Product with id ${id} not found`
+    if (rows.length === 0) {
+      return res.status(404).json({
+        error: `Product with id ${id} not found`,
+      })
+    }
+
+    res.json(rowToProduct(rows[0]))
+  } catch (err) {
+    console.error('getProductById error:', err)
+
+    res.status(500).json({
+      error: 'Failed to fetch product',
     })
   }
+}
+async function createProduct(req, res) {
+  const { name, description, price, image, inStock } = req.body
 
-  const {
-    name,
-    description,
-    price,
-    image,
-    inStock
-  } = req.body
-
-  // Same validation as POST
   const errors = []
 
   if (!name || typeof name !== 'string') {
@@ -102,38 +75,121 @@ function updateProduct(req, res) {
     return res.status(400).json({ errors })
   }
 
-  // Update product
-  const updatedProduct = {
-    id,
-    name,
-    description,
-    price,
-    image,
-    inStock
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO products
+       (name, description, price, image, in_stock)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [name, description, price, image, inStock]
+    )
+
+    res.status(201).json(rowToProduct(rows[0]))
+  } catch (err) {
+    console.error('createProduct error:', err)
+
+    res.status(500).json({
+      error: 'Failed to create product',
+    })
+  }
+}
+async function updateProduct(req, res) {
+  const id = parseInt(req.params.id, 10)
+
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: 'Product ID must be a number',
+    })
   }
 
-  products[index] = updatedProduct
+  const { name, description, price, image, inStock } = req.body
 
-  res.json(updatedProduct)
-}
-function deleteProduct(req, res) {
- const id = parseInt(req.params.id, 10)
- 
- if (isNaN(id)) {
- return res.status(400).json({ error: 'Product ID must be a number' })
- }
- 
- const index = products.findIndex(p => p.id === id)
- 
- if (index === -1) {
- return res.status(404).json({ error: `Product with id ${id} not found` })
- }
- 
- products.splice(index, 1)
- 
- res.status(204).send()
-}
+  const errors = []
 
+  if (!name || typeof name !== 'string') {
+    errors.push('name is required and must be a string')
+  }
+
+  if (!description || typeof description !== 'string') {
+    errors.push('description is required and must be a string')
+  }
+
+  if (typeof price !== 'number' || price < 0) {
+    errors.push('price must be a non-negative number')
+  }
+
+  if (!image || typeof image !== 'string') {
+    errors.push('image is required and must be a string')
+  }
+
+  if (typeof inStock !== 'boolean') {
+    errors.push('inStock must be a boolean')
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({ errors })
+  }
+
+  try {
+    const { rows } = await pool.query(
+      `UPDATE products
+       SET
+         name = $1,
+         description = $2,
+         price = $3,
+         image = $4,
+         in_stock = $5,
+         updated_at = NOW()
+       WHERE id = $6
+       RETURNING *`,
+      [name, description, price, image, inStock, id]
+    )
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        error: `Product with id ${id} not found`,
+      })
+    }
+
+    res.json(rowToProduct(rows[0]))
+  } catch (err) {
+    console.error('updateProduct error:', err)
+
+    res.status(500).json({
+      error: 'Failed to update product',
+    })
+  }
+}
+async function deleteProduct(req, res) {
+  const id = parseInt(req.params.id, 10)
+
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: 'Product ID must be a number',
+    })
+  }
+
+  try {
+    const { rowCount } = await pool.query(
+      'DELETE FROM products WHERE id = $1',
+      [id]
+    )
+
+    if (rowCount === 0) {
+      return res.status(404).json({
+        error: `Product with id ${id} not found`,
+      })
+    }
+
+    res.status(204).send()
+  } catch (err) {
+    console.error('deleteProduct error:', err)
+
+    res.status(500).json({
+      error: 'Failed to delete product',
+    })
+  }
+}
 module.exports = {
   getAllProducts,
   getProductById,

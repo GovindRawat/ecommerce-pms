@@ -1,8 +1,8 @@
 const express = require('express')
+const productsRouter = require('./routes/products.routes')
 const app = express();
 app.use(express.json());
 const requestLogger = require('./middleware/logger')
-const productsRouter = require('./routes/products.routes')
 const cors = require('cors')
 app.use(cors({
  origin: 'http://localhost:5173', // only Vite's dev port

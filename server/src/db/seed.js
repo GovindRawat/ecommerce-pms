@@ -12,7 +12,6 @@ const pool = new Pool({
 
 const seedProducts = [
  {
- id: 1,
  name: 'Wireless Headphones',
  description: 'Premium noise-cancelling over-ear headphones with 30-hour battery life.',
  price: 149.99,
@@ -20,7 +19,6 @@ const seedProducts = [
  inStock: true,
  },
  {
- id: 2,
  name: 'Cotton T-Shirt',
  description: 'Soft, breathable 100% organic cotton tee in classic fit.',
  price: 24.99,
@@ -28,7 +26,6 @@ const seedProducts = [
  inStock: true,
  },
   {
- id: 3,
  name: 'Smart Watch',
  description: 'Track fitness, calls and notifications with a modern smartwatch experience.',
  price: 2499,
@@ -36,7 +33,6 @@ const seedProducts = [
  inStock: false,
  },
  {
- id: 4,
  name: 'Nike Air Max',
  description: 'Comfortable and stylish sneakers designed for everyday wear and sports activities.',
  price: 4999,
@@ -44,7 +40,6 @@ const seedProducts = [
  inStock: true,
  },
  {
- id: 5,
  name: 'iPhone 15 Pro',
  description: ' Powerful smartphone with advanced camera system and premium performance.',
  price: 11999,
@@ -52,7 +47,6 @@ const seedProducts = [
  inStock: true,
  },
  {
- id: 6,
  name: 'Headphones',
  description: 'Enjoy immersive sound with active noise cancellation and long battery life.',
  price: 3299,
@@ -71,11 +65,10 @@ async function seed() {
       await client.query(
         `
         INSERT INTO products
-        (id, name, description, price, image, in_stock)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        (name, description, price, image, in_stock)
+        VALUES ($1, $2, $3, $4, $5)
         `,
         [
-          product.id,
           product.name,
           product.description,
           product.price,
