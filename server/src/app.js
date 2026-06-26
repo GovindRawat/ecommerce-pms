@@ -1,24 +1,35 @@
 const express = require('express')
-const productsRouter = require('./routes/products.routes')
-const app = express();
-app.use(express.json());
-const requestLogger = require('./middleware/logger')
 const cors = require('cors')
+
+const productsRouter = require('./routes/products.routes')
+const ordersRouter = require('./routes/orders.routes')
+const requestLogger = require('./middleware/logger')
+
+const app = express()
+
 app.use(cors({
- origin: 'http://localhost:5173', // only Vite's dev port
- credentials: true,
+  origin: 'http://localhost:5173',
+  credentials: true,
 }))
-app.use(requestLogger) // ← BEFORE all routes
-app.get('/health', (req, res) => {
- res.json({ status: 'ok', timestamp: new Date().toISOString() })
-})
-// Routes
+
+app.use(express.json())
+
+app.use(requestLogger)
+
 app.use('/api/products', productsRouter)
-// 404 handler — must be last
-app.use((req, res) => {
-  res.status(404).json({
-    error: 'Route not found'
+app.use('/api/orders', ordersRouter)
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
   })
 })
 
-module.exports = app;
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Route not found',
+  })
+})
+
+module.exports = app

@@ -94,7 +94,9 @@ export function CartProvider({ children }) {
         .filter(item => item.quantity > 0)
     )
   }
-
+function clearCart() {
+  setCart([])
+}
  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 const value = useMemo(() => ({
  cart,
@@ -106,6 +108,7 @@ const value = useMemo(() => ({
  removeFromCart,
  incrementQuantity,
  decrementQuantity,
+ clearCart
 }), [cart, itemCount, isCartOpen]) // ← dependencies
   return (
     <CartContext.Provider value={value}>
