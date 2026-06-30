@@ -82,14 +82,16 @@ async function createOrder(req, res) {
       const { rows } = await client.query(
         `
         INSERT INTO order_items
-        (order_id, product_id, quantity)
-        VALUES ($1, $2, $3)
+        (order_id, product_id, quantity, unit_price)
+        VALUES ($1, $2, $3, $4)
         RETURNING *
         `,
+        
         [
           order.id,
           item.productId,
           item.quantity,
+          item.unitPrice,
         ]
       )
 

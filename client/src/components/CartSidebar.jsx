@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext'
 import { useProductsContext } from '../context/ProductsContext'
 import { apiFetch } from '../lib/api'
 import Button from './Button'
+
 function CartSidebar() {
   const {
     cart,
@@ -21,6 +22,11 @@ function CartSidebar() {
 
   const closeButtonRef = useRef(null)
 
+  function handleClose() {
+    setOrderStatus(null)
+    closeCart()
+  }
+
   async function handleCheckout() {
     if (cart.length === 0) return
 
@@ -37,16 +43,17 @@ function CartSidebar() {
           })),
         }),
       })
-       console.log('Order response:', order)
+
+      console.log('Order response:', order)
+
       setOrderStatus({
         success: true,
         orderId: order.id,
       })
 
       clearCart()
-
     } catch (err) {
-       console.error('Checkout error:', err)
+      console.error('Checkout error:', err)
 
       setOrderStatus({
         error: err.message,
@@ -56,13 +63,13 @@ function CartSidebar() {
     }
   }
 
-  // Escape key listener
+  // Escape key
   useEffect(() => {
     if (!isCartOpen) return
 
     function handleKeyDown(event) {
       if (event.key === 'Escape') {
-        closeCart()
+        handleClose()
       }
     }
 
@@ -74,9 +81,9 @@ function CartSidebar() {
         handleKeyDown
       )
     }
-  }, [isCartOpen, closeCart])
+  }, [isCartOpen])
 
-  // Body scroll lock
+  // Lock body scroll
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = 'hidden'
@@ -87,7 +94,6 @@ function CartSidebar() {
     }
   }, [isCartOpen])
 
-  // Join cart data with product data
   const cartItems = cart
     .map(cartItem => {
       const product = products.find(
@@ -103,7 +109,6 @@ function CartSidebar() {
     })
     .filter(Boolean)
 
-  // Derived total price
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -118,7 +123,7 @@ function CartSidebar() {
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/50 z-40"
-        onClick={closeCart}
+        onClick={handleClose}
         aria-hidden="true"
       />
 
@@ -136,7 +141,7 @@ function CartSidebar() {
 
           <button
             ref={closeButtonRef}
-            onClick={closeCart}
+            onClick={handleClose}
             aria-label="Close cart"
             className="text-2xl font-bold hover:text-red-600 transition focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
           >
@@ -144,17 +149,16 @@ function CartSidebar() {
           </button>
         </div>
 
-        {/* Empty State */}
-        {cartItems.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-gray-500 text-lg">
-              Your cart is empty
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* Cart Content */}
+        <div className="flex-1 overflow-y-auto">
+          {cartItems.length === 0 ? (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-gray-500 text-lg">
+                Your cart is empty
+              </p>
+            </div>
+          ) : (
+            <div className="p-4 space-y-4">
               {cartItems.map(item => (
                 <div
                   key={item.id}
@@ -175,7 +179,6 @@ function CartSidebar() {
                       ₹{item.price}
                     </p>
 
-                    {/* Quantity Controls */}
                     <div className="flex items-center gap-2 mt-2">
                       <button
                         onClick={() =>
@@ -198,7 +201,6 @@ function CartSidebar() {
                       </button>
                     </div>
 
-                    {/* Remove */}
                     <button
                       onClick={() =>
                         removeFromCart(item.id)
@@ -211,10 +213,33 @@ function CartSidebar() {
                 </div>
               ))}
             </div>
+          )}
+        </div>
 
-            {/* Footer */}
-            <div className="border-t p-4">
-              <div className="flex justify-between text-lg font-bold">
+        {/* Footer - Always Visible */}
+        <div className="border-t p-4">
+
+          {orderStatus?.success && (
+            <p
+              role="status"
+              className="text-green-600 text-sm font-medium mb-3"
+            >
+              ✅ Order #{orderStatus.orderId} placed successfully!
+            </p>
+          )}
+
+          {orderStatus?.error && (
+            <p
+              role="alert"
+              className="text-red-600 text-sm mb-3"
+            >
+              {orderStatus.error}
+            </p>
+          )}
+
+          {cartItems.length > 0 && (
+            <>
+              <div className="flex justify-between text-lg font-bold mb-4">
                 <span>Total:</span>
 
                 <span>
@@ -222,39 +247,20 @@ function CartSidebar() {
                 </span>
               </div>
 
-              {orderStatus?.success && (
-                <p
-                  role="status"
-                  className="text-green-600 text-sm font-medium mt-3"
-                >
-                  Order #{orderStatus.orderId} placed
-                  successfully!
-                </p>
-              )}
-
-              {orderStatus?.error && (
-                <p
-                  role="alert"
-                  className="text-red-600 text-sm mt-3"
-                >
-                  {orderStatus.error}
-                </p>
-              )}
-
               <Button
                 onClick={handleCheckout}
                 disabled={
                   ordering || cart.length === 0
                 }
-                className="w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full"
               >
                 {ordering
                   ? 'Placing order...'
                   : 'Place Order'}
               </Button>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </aside>
     </>
   )

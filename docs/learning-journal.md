@@ -135,3 +135,49 @@ Does this need to happen inside an effect?
 Is my dependency array correct?
 Could this effect trigger itself again?
 Because the easiest way to create an infinite loop in React is an effect that updates state without proper dependency management.
+
+## Week 8, Day 2 — Docker Compose
+
+### **What "it works on Compose" actually proved:**
+
+Today I understood that Docker Compose is much more than just starting multiple containers. When my application worked through Docker Compose, it proved that all the services (client, API, and PostgreSQL) were correctly configured and could communicate with each other over Docker's internal network. It also proved that the environment variables, port mappings, named volumes, and service dependencies were configured correctly. Instead of manually starting every service, Compose created a complete development environment with a single command.
+
+### **The healthcheck dependency chain, explained simply:**
+
+A healthcheck is like asking a service, "Are you actually ready to work?" instead of just checking whether it has started.
+
+In my project:
+1. Docker starts the PostgreSQL container.
+2. PostgreSQL needs a few seconds before it is ready to accept connections.
+3. The healthcheck repeatedly checks if PostgreSQL is healthy.
+4. Only after the database becomes healthy does Docker Compose start the API container.
+5. Once the API is running, the client can successfully make requests to it.
+
+Without this dependency chain, the API might start before PostgreSQL is ready, causing connection errors and application failures.
+
+### **The CMD bug from Day 1 — what I'd check first next time:**
+
+The biggest lesson I learned is to debug containers step by step instead of guessing.
+
+The first commands I would run are:
+
+bash
+docker ps -a
+This tells me whether the container is still running or if it exited immediately.
+If the container exited, I would immediately check its logs:
+
+bash
+docker logs <container-id>
+
+The logs usually explain exactly why the container stopped, such as a missing command, an incorrect CMD, missing files, database connection errors, or missing environment variables.
+Instead of rebuilding everything repeatedly, I now know that `docker ps -a` and `docker logs` are the fastest way to diagnose Docker problems.
+
+### **Still fuzzy:**
+
+* The difference between build-time variables (`VITE_API_URL`) and runtime environment variables.
+* When to use Docker Compose versus running containers individually.
+* The complete Docker networking model and how containers discover each other.
+* The difference between bind mounts, named volumes, and anonymous volumes.
+* How Docker images are promoted from development to production environments.
+* Multi-stage Docker builds and how they reduce image size.
+* Passing different build arguments for development, staging, and production deployments.
